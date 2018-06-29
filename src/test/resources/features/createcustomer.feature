@@ -1,14 +1,12 @@
 Feature: Create customer API Test
 
-  @positive
+  @positive @alldata
   Scenario: Create a customer with valid details
-    Given I have create customer API URL /customer
-#    And I have customer name <CUSTOMER_NAME>, customer address <ADDRESS>, onboard status <ONBOARD_STATUS>, status <STATUS>, view id <VIEW_ID> and workflow id <WORKFLOW_ID>
-#    When I send POST request with customer data
-#    Then I should receive <HTTP_STATUS> as HTTP status code
-
-#    Examples: Customer data
-#      |URL|CUSTOMER_NAME|ADDRESS|ONBOARD_STATUS|STATUS|VIEW_ID|WORKFLOW_ID|
+    Given The app database has dummy customer data
+    And The client has customer data User 1,Kolkata,false,INACTIVE,1,1
+    When The client send POST using API /customer
+    Then It should receive 200 as HTTP status code
+    And customer database should be updated
 
 #  @positive
 #  Scenario: Create a customer with blank onboard status
