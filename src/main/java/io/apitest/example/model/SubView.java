@@ -17,6 +17,8 @@ public class SubView {
     private long id;
     private String name;
     private String description;
+    @ManyToMany
+    private View view;
     @ManyToMany(targetEntity=Field.class)
     private List<Field> fields;
 
@@ -74,6 +76,14 @@ public class SubView {
         this.description = description;
     }
 
+    public View getView() {
+        return view;
+    }
+
+    public void setView(View view) {
+        this.view = view;
+    }
+
     public List<Field> getFields() {
         return fields;
     }
@@ -88,6 +98,7 @@ public class SubView {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", view='" + view + '\'' +
                 ", fields=" + fields +
                 '}';
     }
