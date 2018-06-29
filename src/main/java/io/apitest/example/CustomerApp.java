@@ -2,10 +2,14 @@ package io.apitest.example;
 
 import io.apitest.example.enums.CustomerStatus;
 import io.apitest.example.enums.FieldType;
+import io.apitest.example.interfaces.FieldService;
+import io.apitest.example.interfaces.SubViewService;
+import io.apitest.example.interfaces.ViewService;
 import io.apitest.example.model.*;
 import io.apitest.example.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,6 +25,14 @@ import java.util.List;
 @SpringBootApplication
 public class CustomerApp {
 
+	@Autowired
+	private FieldService fieldService;
+
+	@Autowired
+	private ViewService viewService;
+
+	@Autowired
+	private SubViewService subViewService;
 
 	private static final Logger logger = LoggerFactory.getLogger(CustomerApp.class);
 
@@ -60,6 +72,81 @@ public class CustomerApp {
 			fieldRepository.save(new Field("Address5",FieldType.STRING));
 			fieldRepository.save(new Field("Status5",FieldType.STRING));
 			logger.info("The sample field data have been generated");
+		};
+	}
+
+	@Bean
+	public CommandLineRunner setupView(ViewRepository viewRepository) {
+		return (args) -> {
+			List<Field> fieldSet1 = new ArrayList<>();
+			fieldSet1.add(fieldService.getFieldById(1));
+			fieldSet1.add(fieldService.getFieldById(2));
+			fieldSet1.add(fieldService.getFieldById(3));
+			fieldSet1.add(fieldService.getFieldById(4));
+
+			List<Field> fieldSet2 = new ArrayList<>();
+			fieldSet2.add(fieldService.getFieldById(5));
+			fieldSet2.add(fieldService.getFieldById(6));
+			fieldSet2.add(fieldService.getFieldById(7));
+
+			List<Field> fieldSet3 = new ArrayList<>();
+			fieldSet3.add(fieldService.getFieldById(8));
+			fieldSet3.add(fieldService.getFieldById(9));
+			fieldSet3.add(fieldService.getFieldById(10));
+
+			viewRepository.save(new View("Kolkata View","It is used for Kolkata customers",fieldSet1));
+			viewRepository.save(new View("Bangalore View","It is used for Bangalore customers",fieldSet2));
+			viewRepository.save(new View("Mumbai View","It is used for Mumbai customers",fieldSet1));
+			viewRepository.save(new View("Chennai View","It is used for Chennai customers",fieldSet3));
+			logger.info("The sample view data have been generated");
+		};
+	}
+
+	@Bean
+	public CommandLineRunner setupSubView(SubViewRepository subViewRepository) {
+		return (args) -> {
+			List<Field> fieldSet1 = new ArrayList<>();
+			fieldSet1.add(fieldService.getFieldById(11));
+			fieldSet1.add(fieldService.getFieldById(12));
+			fieldSet1.add(fieldService.getFieldById(13));
+			fieldSet1.add(fieldService.getFieldById(14));
+
+			List<Field> fieldSet3 = new ArrayList<>();
+			fieldSet3.add(fieldService.getFieldById(15));
+			fieldSet3.add(fieldService.getFieldById(18));
+			fieldSet3.add(fieldService.getFieldById(17));
+
+			List<View> views1 = new ArrayList<>();
+			List<View> views2 = new ArrayList<>();
+			views1.add(viewService.getViewById(1));
+			views2.add(viewService.getViewById(2));
+
+			SubView subView1 = new SubView( "Kolkata SubView", "It is used for Kolkata customers", fieldSet3,views1);
+			SubView subView2 = new SubView( "Bangalore SubView", "It is used for Bangalore customers", fieldSet1,views2);
+
+			List<SubView> subViews1 = new ArrayList<>();
+			List<SubView> subViews2 = new ArrayList<>();
+
+			subViews1.add(subView1);
+			viewService.getViewById(1).setSubViews(subViews1);
+
+			subViews2.add(subView2);
+			viewService.getViewById(2).setSubViews(subViews2);
+
+			subViewRepository.save(subView1);
+			subViewRepository.save(subView2);
+			logger.info("The sample sub view data have been generated");
+		};
+	}
+
+	@Bean
+	public CommandLineRunner setupWorkflow(WorkflowRepository workflowRepository) {
+		return (args) -> {
+			workflowRepository.save(new Workflow("Kolkata Workflow","It is used for Kolkata customers"));
+			workflowRepository.save(new Workflow("Bangalore Workflow","It is used for Bangalore customers"));
+			workflowRepository.save(new Workflow("Mumbai Workflow","It is used for Mumbai customers"));
+			workflowRepository.save(new Workflow("Chennai Workflow","It is used for Chennai customers"));
+			logger.info("The sample workflow data have been generated");
 		};
 	}
 }
