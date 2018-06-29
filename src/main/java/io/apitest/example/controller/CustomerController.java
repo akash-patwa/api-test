@@ -30,7 +30,7 @@ public class CustomerController {
     PayloadValidator payloadValidator;
 
     @RequestMapping(value = "/customer", method = RequestMethod.POST)
-    public ResponseEntity<Response> saveCustomer(@RequestBody Customer payload) throws CustomerException {
+    public ResponseEntity<Customer> saveCustomer(@RequestBody Customer payload) throws CustomerException {
         logger.info("Payload to save " + payload);
         int result = payloadValidator.validateCreateCustomerPayload(payload);
         if (result == -1){
@@ -42,9 +42,7 @@ public class CustomerController {
         else if(result == -3){
             throw new CustomerException("Specified workflow does not exists");
         }
-
-        customerService.saveCustomer(payload);
-        return new ResponseEntity<Response>(new Response(HttpStatus.OK.value(),"Customer data saved"), HttpStatus.OK);
+        return new ResponseEntity<Customer>(customerService.saveCustomer(payload), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/customer/{id}", method = RequestMethod.GET)
