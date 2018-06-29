@@ -57,6 +57,16 @@ public class Customer {
         this.workflowId = workflowId;
     }
 
+    public Customer(String name, String address, long viewId, long workflowId) {
+        super();
+        this.name = name;
+        this.address = address;
+        this.isOnboarded = false;
+        this.status = CustomerStatus.INACTIVE;
+        this.viewId = viewId;
+        this.workflowId = workflowId;
+    }
+
     public long getId() {
         return id;
     }
