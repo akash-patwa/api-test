@@ -10,7 +10,6 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = {"src/test/resources/features"},
-        monochrome = true,
         strict = true,
         glue = "io.apitest.example.integrationtest.steps",
         format = {"pretty",
