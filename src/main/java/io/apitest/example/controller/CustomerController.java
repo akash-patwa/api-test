@@ -47,4 +47,41 @@ public class CustomerController {
         return new ResponseEntity<Response>(new Response(HttpStatus.OK.value(),"Customer data saved"), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/customer/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Customer> getCustomerById(@PathVariable("id") long id) throws CustomerException{
+        logger.info("Customer id to return " + id);
+        Customer customer = customerService.getCustomerById(id);
+        if (customer == null || customer.getId() <= 0){
+            throw new CustomerException("Customer doesn't exist");
+        }
+        return new ResponseEntity<Customer>(customerService.getCustomerById(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/customer/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Response> removeCustomerById(@PathVariable("id") long id) throws CustomerException{
+        logger.info("Customer id to remove " + id);
+        Customer customer = customerService.getCustomerById(id);
+        if (customer == null || customer.getId() <= 0){
+            throw new CustomerException("Customer to delete doesn't exist");
+        }
+        customerService.removeCustomer(customer);
+        return new ResponseEntity<Response>(new Response(HttpStatus.OK.value(), "Customer has been deleted"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/customer", method = RequestMethod.PATCH)
+    public ResponseEntity<Customer>  updateCustomer(@RequestBody Customer payload) throws CustomerException{
+        logger.info("Payload to update " + payload);
+        Customer customer = customerService.getCustomerById(payload.getId());
+        if (customer == null || customer.getId() <= 0){
+            throw new CustomerException("Customer to update doesn't exist");
+        }
+        return new ResponseEntity<Customer>(customerService.saveCustomer(payload), HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/customer", method=RequestMethod.GET)
+    public ResponseEntity<List<Customer>> getAllCustomers(){
+        logger.info("Returning all the Customers");
+        return new ResponseEntity<List<Customer>>(customerService.getAllCustomer(), HttpStatus.OK);
+    }
+
 }
