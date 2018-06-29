@@ -36,6 +36,12 @@ public class CustomerController {
         if (result == -1){
             throw new CustomerException("Payload malformed, id must not be defined");
         }
+        else if(result == -2){
+            throw new CustomerException("Specified view does not exists");
+        }
+        else if(result == -3){
+            throw new CustomerException("Specified workflow does not exists");
+        }
 
         customerService.saveCustomer(payload);
         return new ResponseEntity<Response>(new Response(HttpStatus.OK.value(),"Customer data saved"), HttpStatus.OK);
