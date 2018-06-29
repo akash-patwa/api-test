@@ -15,9 +15,29 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Created by prasantabiswas on 27/06/18.
+ * Created by prasantabiswas on 29/06/18.
  */
 
 @RestController
 public class CustomerController {
+
+    private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
+
+    @Autowired
+    CustomerService customerService;
+
+    @Autowired
+    PayloadValidator payloadValidator;
+
+    @RequestMapping(value = "/customer", method = RequestMethod.POST)
+    public ResponseEntity<Response> saveCustomer(@RequestBody Customer payload) throws CustomerException {
+        logger.info("Payload to save " + payload);
+        int result = payloadValidator.validateCreateCustomerPayload(payload);
+        if (result == -1){
+            throw new CustomerException("Payload malformed, id must not be defined");
+        }
+
+        customerService.saveCustomer(payload);
+        return new ResponseEntity<Response>(new Response(HttpStatus.OK.value(),"Customer data saved"), HttpStatus.OK);
+    }
 }
