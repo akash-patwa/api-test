@@ -15,7 +15,7 @@ import java.util.List;
  * Created by prasantabiswas on 28/06/18.
  */
 
-@Service("customerService")
+@Service("fieldService")
 public class FieldServiceImpl implements FieldService {
 
     @Autowired

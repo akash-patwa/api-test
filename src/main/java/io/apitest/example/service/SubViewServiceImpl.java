@@ -15,7 +15,7 @@ import java.util.List;
  * Created by prasantabiswas on 28/06/18.
  */
 
-@Service("viewService")
+@Service("subViewService")
 public class SubViewServiceImpl implements SubViewService {
 
     @Autowired
