@@ -1,10 +1,7 @@
 package io.apitest.example.service;
 
-import io.apitest.example.interfaces.ViewService;
 import io.apitest.example.interfaces.WorkflowService;
-import io.apitest.example.model.View;
 import io.apitest.example.model.Workflow;
-import io.apitest.example.repository.ViewRepository;
 import io.apitest.example.repository.WorkflowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

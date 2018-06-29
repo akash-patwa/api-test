@@ -4,8 +4,6 @@ import io.apitest.example.interfaces.ViewService;
 import io.apitest.example.interfaces.WorkflowService;
 import io.apitest.example.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**

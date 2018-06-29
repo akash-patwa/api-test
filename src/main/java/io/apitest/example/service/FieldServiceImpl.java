@@ -1,10 +1,7 @@
 package io.apitest.example.service;
 
-import io.apitest.example.interfaces.CustomerService;
 import io.apitest.example.interfaces.FieldService;
-import io.apitest.example.model.Customer;
 import io.apitest.example.model.Field;
-import io.apitest.example.repository.CustomerRepository;
 import io.apitest.example.repository.FieldRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
