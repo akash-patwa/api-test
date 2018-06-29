@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Created by prasantabiswas on 29/06/18.
+ * Created by prasantabiswas on 27/06/18.
  */
 
 @RestController
@@ -40,4 +40,5 @@ public class CustomerController {
         customerService.saveCustomer(payload);
         return new ResponseEntity<Response>(new Response(HttpStatus.OK.value(),"Customer data saved"), HttpStatus.OK);
     }
+
 }
