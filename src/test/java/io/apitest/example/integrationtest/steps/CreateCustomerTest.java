@@ -89,4 +89,18 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
         int newDbState = customerService.getAllCustomer().size();
         Assert.assertTrue("Creation customer verification failed", newDbState > dbState);
     }
+
+    @And("^The client has customer data (.+),(.+),(.+),(.+),(.+)$")
+    public void createRequestObject(String name, String address, CustomerStatus status, long viewId, long workflowId) {
+        requestObject = "{" +
+                "\"name\":"+"\""+name+"\""+"," +
+                "\"address\":"+"\""+address+"\""+"," +
+                "\"status\":"+status.ordinal()+"," +
+                "\"viewId\":"+viewId+", " +
+                "\"workflowId\":"+workflowId+" " +
+                "}";
+        Customer customer = gson.fromJson(requestObject,Customer.class);
+        logger.info("Request object created:\n"+ requestObject);
+        Assert.assertTrue("Invalid request parameter",customer != null);
+    }
 }
