@@ -1,8 +1,5 @@
 package io.apitest.example.model;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,20 +14,21 @@ public class SubView {
     private long id;
     private String name;
     private String description;
-    @ManyToMany
-    private View view;
     @ManyToMany(targetEntity=Field.class)
     private List<Field> fields;
+    @ManyToMany
+    private List<View> views;
 
     public SubView() {
         super();
     }
 
-    public SubView(long id, String name, String description, List<Field> fields, View view) {
+    public SubView(long id, String name, String description, List<Field> fields, List<View> views) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.fields = fields;
+        this.views = views;
     }
 
     public SubView(long id, String name, String description, List<Field> fields) {
@@ -40,10 +38,11 @@ public class SubView {
         this.fields = fields;
     }
 
-    public SubView(String name, String description, List<Field> fields, View view) {
+    public SubView(String name, String description, List<Field> fields, List<View> views) {
         this.name = name;
         this.description = description;
         this.fields = fields;
+        this.views = views;
     }
 
     public SubView(String name, String description, List<Field> fields) {
@@ -76,12 +75,12 @@ public class SubView {
         this.description = description;
     }
 
-    public View getView() {
-        return view;
+    public List<View> getViews() {
+        return views;
     }
 
-    public void setView(View view) {
-        this.view = view;
+    public void setViews(List<View> views) {
+        this.views = views;
     }
 
     public List<Field> getFields() {
@@ -98,7 +97,7 @@ public class SubView {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", view='" + view + '\'' +
+                ", views='" + views + '\'' +
                 ", fields=" + fields +
                 '}';
     }
