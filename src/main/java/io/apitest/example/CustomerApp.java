@@ -26,4 +26,15 @@ public class CustomerApp {
 	public static void main(String[] args) {
 		SpringApplication.run(CustomerApp.class, args);
 	}
+
+	@Bean
+	public CommandLineRunner setupCustomer(CustomerRepository customerRepository) {
+		return (args) -> {
+			customerRepository.save(new Customer("User 1","Kolkata, West Bengal",false, CustomerStatus.INACTIVE,1,1));
+			customerRepository.save(new Customer("User 2","Bangalore, Karnataka",false, CustomerStatus.ACTIVE,2,2));
+			customerRepository.save(new Customer("User 3","Mumbai, Maharastra",true, CustomerStatus.BLOCKED,3,3));
+			customerRepository.save(new Customer("User 4","Chennai, Tamilnadu",false, CustomerStatus.ACTIVE,4,4));
+			logger.info("The sample customer data has been generated");
+		};
+	}
 }
