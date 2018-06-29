@@ -11,7 +11,7 @@ Feature: Create customer API Test
   @positive
   Scenario: Create a customer with blank onboard status
     Given The app database has dummy customer data
-    And The client has customer data User 2,Bangalore,INACTIVE,1,1
+    And The client has customer data User 2,Bangalore,ACTIVE,2,1
     When The client send POST using API /customer
     Then It should receive 200 as HTTP status code
     And customer database should be updated
