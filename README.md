@@ -9,6 +9,10 @@ When a user logs in based on this configuration dynamic views are presented so t
 
 **Note:** We have used spring jpa repository to mock database instead of Mongo
 
+## Prerequisites
+ 1. JDK 1.7 or above
+ 2. Maven 3 or above
+
 ## Integration test
 Integration tests for the Customer App are automated using `Cucumber` `BDD` based 
 test scenarios. So we do not need any other test scenario documnet as tht 
