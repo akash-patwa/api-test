@@ -222,7 +222,7 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
                 .andDo(print());
     }
 
-    @Given("^The Client has customer data (.+),(.+),(.+),(.+),(.+),(.+),(.+) with invalid workflow$")
+    @Given("^The Client has customer data (.+),(.+),(.+),(.+),(.+),(.+),(.+)$")
     public void createRequestWithId(long id, String name, String address, boolean onboarded, CustomerStatus status, long viewId, long workflowId) {
         requestObject = "{" +
                 "\"id\":"+id+"," +

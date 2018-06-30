@@ -96,7 +96,7 @@ Feature: Create customer API Test
 
     @negative
     Scenario: Check validation on customer creation with invalid request format containing id
-      Given The Client has customer data 1, User 13,Ahmedabad,true,ACTIVE,2,1 with invalid workflow
+      Given The Client has customer data 1, User 13,Ahmedabad,true,ACTIVE,2,1
       When The client send POST using API /customers
       Then The client should receive 400 as HTTP status code
       And Client should get error message The request could not be understood by the server due to malformed syntax
