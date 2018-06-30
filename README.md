@@ -45,7 +45,7 @@ The integration test covers the two APIs
   
     java -jar target/api-test-*.jar     #Replace * with the version of the jar
     
- Now we can access the two APIs using cURL or any other REST client. For example if we hit the following API in browser, we wil get the list of available customers
+ Now we can access the APIs using cURL or any other REST client. For example if we hit the following API in browser, we wil get the list of available customers
  
     http://localhost:8080/demo/api/customers
     
