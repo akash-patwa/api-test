@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
         features = {"src/test/resources/features"},
         strict = true,
         glue = "io.apitest.example.integrationtest.steps",
-        format = {"pretty",
+        plugin = {"pretty",
                 "html:target/reports/cucumber/html",
                 "json:target/cucumber.json",
                 "usage:target/usage.jsonx",
