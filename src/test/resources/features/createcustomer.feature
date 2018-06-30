@@ -48,6 +48,7 @@ Feature: Create customer API Test
     And The client has customer data Pune,false,INACTIVE,1,1 without name
     When The client send POST using API /customers
     Then The client should receive 400 as HTTP status code
+    And Client should get error message Request validation failed
     And Customer database should not be updated
 
   @negative
@@ -56,6 +57,7 @@ Feature: Create customer API Test
     And The client has customer data User 10,true,ACTIVE,3,4 without address
     When The client send POST using API /customers
     Then The client should receive 400 as HTTP status code
+    And Client should get error message Request validation failed
     And Customer database should not be updated
 
   @negative
@@ -113,4 +115,20 @@ Feature: Create customer API Test
     Given The client has customer data User 13,Gurgaon,true,ACTIVE,2,1
     When The client send POST using API /custom
     Then The client should receive 404 as HTTP status code
+    And Customer database should not be updated
+
+  @negative
+  Scenario: Check validation on customer creation with invalid status
+    Given Client has customer data User 14,Gurgaon,true,ACTIVE1,2,1 with invalid status
+    When The client send POST using API /customers
+    Then The client should receive 400 as HTTP status code
+    And Client should get error message The request could not be understood by the server due to malformed syntax
+    And Customer database should not be updated
+
+  @negative
+  Scenario: Check validation on customer creation with invalid onboard status
+    Given Client has customer data User 15,Gurgaon,abc,ACTIVE,2,1 with invalid onboard status
+    When The client send POST using API /customers
+    Then The client should receive 400 as HTTP status code
+    And Client should get error message The request could not be understood by the server due to malformed syntax
     And Customer database should not be updated
