@@ -36,8 +36,8 @@ The integration test covers the two APIs
  It will generate an additional test report i.e. junit.xml report inside `/target` folder
  
  ## Run Customer App
- We can do manual testing as well by running the main CustomerApp class. 
-  1. First we need to package out application so that we can run the app. Run the following maven command
+ We can do manual testing as well by running the jar. 
+  1. First we need to package the application so that we can run the app. Run the following maven command
   
     mvn clean package
     
