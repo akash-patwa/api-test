@@ -67,12 +67,12 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
         Assert.assertTrue(true);
     }
 
-    @Then("^It should receive (.+) as HTTP status code$")
+    @Then("^The client should receive (.+) as HTTP status code$")
     public void verifyHTTPStatusCode(int status) throws Exception {
         resultActions.andExpect(status().is(status));
     }
 
-    @And("^customer database should be updated$")
+    @And("^Customer database should be updated$")
     public void verifyCustomerUpdatedDatabase() throws Exception {
         logger.info("Check customer database update");
         resultActions.andExpect(jsonPath("$.id").exists())
@@ -143,7 +143,7 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
         Assert.assertTrue("Invalid request parameter",customer != null);
     }
 
-    @And("^customer database should not be updated$")
+    @And("^Customer database should not be updated$")
     public void verifyCustomerDatabase() throws Exception {
         logger.info("Check customer database update");
         resultActions.andExpect(jsonPath("$.id").doesNotExist())
