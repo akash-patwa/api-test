@@ -1,5 +1,6 @@
 package io.apitest.example.controller;
 
+import io.apitest.example.enums.CustomerStatus;
 import io.apitest.example.exception.CustomerException;
 import io.apitest.example.interfaces.CustomerService;
 import io.apitest.example.model.Customer;
@@ -42,6 +43,8 @@ public class CustomerController {
         else if(result == -3){
             throw new CustomerException("Specified workflow does not exists");
         }
+        if(payload.getStatus() == null)
+            payload.setStatus(CustomerStatus.INACTIVE);
         return new ResponseEntity<Customer>(customerService.saveCustomer(payload), HttpStatus.OK);
     }
 
