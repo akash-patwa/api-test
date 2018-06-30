@@ -81,3 +81,24 @@ Feature: Create customer API Test
     Then It should receive 404 as HTTP status code
     And Client should get error message Specified workflow does not exist
     And customer database should not be updated
+
+    @negative
+    Scenario: Check validation on customer creation with invalid request format containing id
+      Given The Client has customer data 1, User 13,Ahmedabad,true,ACTIVE,2,1 with invalid workflow
+      When The client send POST using API /customer
+      Then It should receive 400 as HTTP status code
+      And Client should get error message The request could not be understood by the server due to malformed syntax
+      And customer database should not be updated
+
+  @negative
+  Scenario: Check validation on customer creation with invalid request URL
+    Given The client has customer data User 14,Noida,true,ACTIVE,2,1
+    When The client send POST using API /customer/abc
+    Then It should receive 405 as HTTP status code
+    And Client should get error message Method Not Supported
+
+  @negative
+  Scenario: Check validation on customer creation with invalid request URL
+    Given The client has customer data User 13,Gurgaon,true,ACTIVE,2,1
+    When The client send POST using API /custom
+    Then It should receive 404 as HTTP status code

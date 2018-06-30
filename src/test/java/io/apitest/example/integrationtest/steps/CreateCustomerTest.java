@@ -217,7 +217,24 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
     }
 
     @And("^Client should get error message (.+)$")
-    public void verifyExceptionMessage(String errorMessage) throws Exception {
-        resultActions.andExpect(jsonPath("$.message").value(errorMessage));
+    public void verifyExceptionMessage(String exceptionMessage) throws Exception {
+        resultActions.andExpect(jsonPath("$.message").value(exceptionMessage))
+                .andDo(print());
+    }
+
+    @Given("^The Client has customer data (.+),(.+),(.+),(.+),(.+),(.+),(.+) with invalid workflow$")
+    public void createRequestWithId(long id, String name, String address, boolean onboarded, CustomerStatus status, long viewId, long workflowId) {
+        requestObject = "{" +
+                "\"id\":"+id+"," +
+                "\"name\":"+"\""+name+"\""+"," +
+                "\"address\":"+"\""+address+"\""+"," +
+                "\"onboarded\":"+onboarded+"," +
+                "\"status\":"+"\""+status+"\""+"," +
+                "\"viewId\":"+viewId+"," +
+                "\"workflowId\":"+workflowId+" " +
+                "}";
+        Customer customer = gson.fromJson(requestObject,Customer.class);
+        logger.info("Request object created:"+ requestObject);
+        Assert.assertTrue("Invalid request parameter",customer != null);
     }
 }
