@@ -1,23 +1,22 @@
 package io.apitest.example.exception;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 /**
  * Created by prasantabiswas on 29/06/18.
  */
-public class CustomerException extends Exception{
+
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class CustomerNotFoundException extends RuntimeException{
 
     private static final long serialVersionUID = 1L;
-    private String errorMessage;
 
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public CustomerException(String errorMessage) {
+    public CustomerNotFoundException(String errorMessage) {
         super(errorMessage);
-        this.errorMessage = errorMessage;
     }
 
-    public CustomerException() {
+    public CustomerNotFoundException() {
         super();
     }
 }
