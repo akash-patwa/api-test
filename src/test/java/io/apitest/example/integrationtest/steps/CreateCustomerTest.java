@@ -115,7 +115,7 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
         Assert.assertTrue("Invalid request parameter",customer != null);
     }
 
-    @And("^The client has customer data (.+),(.+),(.+),(.+),(.+) but no view Id$")
+    @And("^The client has customer data (.+),(.+),(.+),(.+),(.+) but no view id$")
     public void createRequestObjectNoView(String name, String address, boolean onboarded, CustomerStatus status, long workflowId) {
         requestObject = "{" +
                 "\"name\":"+"\""+name+"\""+"," +
@@ -129,7 +129,7 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
         Assert.assertTrue("Invalid request parameter",customer != null);
     }
 
-    @And("^The client has customer data (.+),(.+),(.+),(.+),(.+) but no workflow Id")
+    @And("^The client has customer data (.+),(.+),(.+),(.+),(.+) but no workflow id$")
     public void createRequestObjectNoWorkflow(String name, String address, boolean onboarded, CustomerStatus status, long viewId) {
         requestObject = "{" +
                 "\"name\":"+"\""+name+"\""+"," +
@@ -156,5 +156,68 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
                 .andDo(print());
         int newDbState = customerService.getAllCustomer().size();
         Assert.assertTrue("Creation customer verification failed", newDbState == dbState);
+    }
+
+    @And("^The client has customer data (.+),(.+),(.+),(.+),(.+) without name$")
+    public void createRequestWithoutName(String address, boolean onboarded, CustomerStatus status, long viewId, long workflowId) {
+        requestObject = "{" +
+                "\"address\":"+"\""+address+"\""+"," +
+                "\"onboarded\":"+onboarded+"," +
+                "\"status\":"+"\""+status+"\""+"," +
+                "\"status\":"+viewId+"," +
+                "\"workflowId\":"+workflowId+" " +
+                "}";
+        Customer customer = gson.fromJson(requestObject,Customer.class);
+        logger.info("Request object created:"+ requestObject);
+        Assert.assertTrue("Invalid request parameter",customer != null);
+    }
+
+    @And("^The client has customer data (.+),(.+),(.+),(.+),(.+) without address$")
+    public void createRequestWithoutAddress(String name, boolean onboarded, CustomerStatus status, long viewId, long workflowId) {
+        requestObject = "{" +
+                "\"address\":"+"\""+name+"\""+"," +
+                "\"onboarded\":"+onboarded+"," +
+                "\"status\":"+"\""+status+"\""+"," +
+                "\"status\":"+viewId+"," +
+                "\"workflowId\":"+workflowId+" " +
+                "}";
+        Customer customer = gson.fromJson(requestObject,Customer.class);
+        logger.info("Request object created:"+ requestObject);
+        Assert.assertTrue("Invalid request parameter",customer != null);
+    }
+
+    @And("^Client has customer data (.+),(.+),(.+),(.+),(.+),(.+) with invalid view$")
+    public void createRequestWithInvalidView(String name, String address, boolean onboarded, CustomerStatus status, long viewId, long workflowId) {
+        requestObject = "{" +
+                "\"name\":"+"\""+name+"\""+"," +
+                "\"address\":"+"\""+address+"\""+"," +
+                "\"onboarded\":"+onboarded+"," +
+                "\"status\":"+"\""+status+"\""+"," +
+                "\"viewId\":"+viewId+"," +
+                "\"workflowId\":"+workflowId+" " +
+                "}";
+        Customer customer = gson.fromJson(requestObject,Customer.class);
+        logger.info("Request object created:"+ requestObject);
+        Assert.assertTrue("Invalid request parameter",customer != null);
+    }
+
+    @And("^Client has customer data (.+),(.+),(.+),(.+),(.+),(.+) with invalid workflow$")
+    public void createRequestWithInvalidWorkflow(String name, String address, boolean onboarded, CustomerStatus status, long viewId, long workflowId) {
+        requestObject = "{" +
+                "\"name\":"+"\""+name+"\""+"," +
+                "\"address\":"+"\""+address+"\""+"," +
+                "\"onboarded\":"+onboarded+"," +
+                "\"status\":"+"\""+status+"\""+"," +
+                "\"viewId\":"+viewId+"," +
+                "\"workflowId\":"+workflowId+" " +
+                "}";
+        Customer customer = gson.fromJson(requestObject,Customer.class);
+        logger.info("Request object created:"+ requestObject);
+        Assert.assertTrue("Invalid request parameter",customer != null);
+    }
+
+    @And("^Client should get error message (.+)$")
+    public void verifyExceptionMessage(String errorMessage) throws Exception {
+        resultActions.andExpect(jsonPath("$.message").value(errorMessage));
     }
 }

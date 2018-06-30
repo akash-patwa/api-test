@@ -1,6 +1,6 @@
 Feature: Create customer API Test
 
-  @positive @alldata
+  @positive
   Scenario: Create a customer with valid details
     Given The app database has dummy customer data
     And The client has customer data User 5,Kolkata,false,INACTIVE,1,1
@@ -32,69 +32,52 @@ Feature: Create customer API Test
     Then It should receive 200 as HTTP status code
     And customer database should be updated
 
-#  @negative
-#  Scenario Outline: Check validation on customer creation without mandatory fields
-#    Given I have create customer API URL <URL>
-#    And I have customer name <CUSTOMER_NAME>, customer address <ADDRESS>, onboard status <ONBOARD_STATUS>, status <STATUS>, view id <VIEW_ID> and workflow id <WORKFLOW_ID>
-#    When I send POST request with customer data
-#    Then I should receive <HTTP_STATUS> as HTTP status code
-#    And I should receive error message <ERROR>
-#
-#    Examples: Customer data
-#      |URL|CUSTOMER_NAME|ADDRESS|ONBOARD_STATUS|STATUS|VIEW_ID|WORKFLOW_ID|ERROR|
-
-#  @negative
-#  Scenario: Validate error on creating customer with wrong workflow id
-#    Given I have create customer API URL <URL>
-#    And I have customer name <CUSTOMER_NAME>, customer address <ADDRESS>, onboard status <ONBOARD_STATUS>, status <STATUS>, view id <VIEW_ID> and workflow id <WORKFLOW_ID>
-#    When I send POST request with customer data
-#    Then I should receive <HTTP_STATUS> as HTTP status code
-#    And I should receive error message <ERROR>
-#
-#  @negative
-#  Scenario: Validate error on creating customer with blank name
-#    Given I have create customer API URL <URL>
-#    And I have customer name <CUSTOMER_NAME>, customer address <ADDRESS>, onboard status <ONBOARD_STATUS>, status <STATUS>, view id <VIEW_ID> and workflow id <WORKFLOW_ID>
-#    When I send POST request with customer data
-#    Then I should receive <HTTP_STATUS> as HTTP status code
-#    And I should receive error message <ERROR>
-#
-#  @negative
-#  Scenario: Validate error on creating customer with blank address
-#    Given I have create customer API URL <URL>
-#    And I have customer name <CUSTOMER_NAME>, customer address <ADDRESS>, onboard status <ONBOARD_STATUS>, status <STATUS>, view id <VIEW_ID> and workflow id <WORKFLOW_ID>
-#    When I send POST request with customer data
-#    Then I should receive <HTTP_STATUS> as HTTP status code
-#    And I should receive error message <ERROR>
-#
-#  @negative
-#  Scenario: Validate error on creating customer with blank address
-#    Given I have create customer API URL <URL>
-#    And I have customer name <CUSTOMER_NAME>, customer address <ADDRESS>, onboard status <ONBOARD_STATUS>, status <STATUS>, view id <VIEW_ID> and workflow id <WORKFLOW_ID>
-#    When I send POST request with customer data
-#    Then I should receive <HTTP_STATUS> as HTTP status code
-#    And I should receive error message <ERROR>
-
-#  @negative
-#  Scenario Outline: Check validation on creation with invalid optional fields
-#    Given I have create customer API URL <URL>
-#    And I have customer name <CUSTOMER_NAME>, customer address <ADDRESS>, onboard status <ONBOARD_STATUS>, status <STATUS>, view id <VIEW_ID> and workflow id <WORKFLOW_ID>
-#    When I send POST request with customer data
-#    Then I should receive <HTTP_STATUS> as HTTP status code
-#    And I should receive error message <ERROR>
+  @negative
+  Scenario: Check validation on customer creation without mandatory name
+    Given The app database has dummy customer data
+    And The client has customer data Pune,false,INACTIVE,1,1 without name
+    When The client send POST using API /customer
+    Then It should receive 400 as HTTP status code
+    And customer database should not be updated
 
   @negative
-  Scenario: Create a customer with blank view id
+  Scenario: Check validation on customer creation without mandatory address
     Given The app database has dummy customer data
-    And The client has customer data User 4,Chennai,true,BLOCKED,2 but no view Id
+    And The client has customer data User 10,true,ACTIVE,3,4 without address
+    When The client send POST using API /customer
+    Then It should receive 400 as HTTP status code
+    And customer database should not be updated
+
+  @negative
+  Scenario: Check validation on customer creation with blank view id
+    Given The app database has dummy customer data
+    And The client has customer data User 4,Chennai,true,BLOCKED,2 but no view id
     When The client send POST using API /customer
     Then It should receive 404 as HTTP status code
     And customer database should not be updated
 
   @negative
-  Scenario: Create a customer with blank workflow id
+  Scenario: Check validation on customer creation with blank workflow id
     Given The app database has dummy customer data
-    And The client has customer data User 5,Delhi,false,ACTIVE,4 but no workflow Id
+    And The client has customer data User 5,Delhi,false,ACTIVE,4 but no workflow id
     When The client send POST using API /customer
     Then It should receive 404 as HTTP status code
+    And customer database should not be updated
+
+  @negative
+  Scenario: Check validation on customer creation with invalid view
+    Given The app database has dummy customer data
+    And Client has customer data User 11,Jaypur,true,INACTIVE,-7,4 with invalid view
+    When The client send POST using API /customer
+    Then It should receive 404 as HTTP status code
+    And Client should get error message Specified view does not exist
+    And customer database should not be updated
+
+  @negative
+  Scenario: Check validation on customer creation with invalid workflow
+    Given The app database has dummy customer data
+    And Client has customer data User 12,Goa,true,ACTIVE,3,-9 with invalid workflow
+    When The client send POST using API /customer
+    Then It should receive 404 as HTTP status code
+    And Client should get error message Specified workflow does not exist
     And customer database should not be updated
