@@ -60,8 +60,7 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex,
-                                                                  HttpHeaders headers, HttpStatus status, WebRequest request) {
+    public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex, WebRequest request) {
         ErrorResponse errorDetails = new ErrorResponse();
         errorDetails.setTimestamp(new Date());
         errorDetails.setErrorCode(HttpStatus.BAD_REQUEST.value());
