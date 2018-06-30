@@ -37,7 +37,7 @@ public class CustomerController {
     @Autowired
     WorkflowService workflowService;
 
-    @RequestMapping(value = "/customer", method = RequestMethod.POST)
+    @RequestMapping(value = "/customers", method = RequestMethod.POST)
     public ResponseEntity<Customer> saveCustomer(@Valid @RequestBody Customer payload) throws Exception {
         logger.info("Payload to save " + payload);
 
@@ -55,7 +55,7 @@ public class CustomerController {
         return new ResponseEntity<Customer>(customerService.saveCustomer(payload), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/customer/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/customers/{id}", method = RequestMethod.GET)
     public ResponseEntity<Customer> getCustomerById(@PathVariable("id") long id) throws CustomerNotFoundException {
         logger.info("Customer id to return " + id);
         Customer customer = customerService.getCustomerById(id);
@@ -65,7 +65,7 @@ public class CustomerController {
         return new ResponseEntity<Customer>(customerService.getCustomerById(id), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/customer/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/customers/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Response> removeCustomerById(@PathVariable("id") long id) throws CustomerNotFoundException {
         logger.info("Customer id to remove " + id);
         Customer customer = customerService.getCustomerById(id);
@@ -76,7 +76,7 @@ public class CustomerController {
         return new ResponseEntity<Response>(new Response(HttpStatus.OK.value(), "Customer has been deleted"), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/customer", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/customers", method = RequestMethod.PATCH)
     public ResponseEntity<Customer>  updateCustomer(@Valid @RequestBody Customer payload) throws CustomerNotFoundException {
         logger.info("Payload to update " + payload);
         Customer customer = customerService.getCustomerById(payload.getId());
@@ -95,7 +95,7 @@ public class CustomerController {
         return new ResponseEntity<Customer>(customerService.saveCustomer(payload), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/customer", method=RequestMethod.GET)
+    @RequestMapping(value="/customers", method=RequestMethod.GET)
     public ResponseEntity<List<Customer>> getAllCustomers(){
         logger.info("Returning all the Customers");
         return new ResponseEntity<List<Customer>>(customerService.getAllCustomer(), HttpStatus.OK);
