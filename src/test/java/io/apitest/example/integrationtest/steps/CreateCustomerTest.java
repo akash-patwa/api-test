@@ -136,7 +136,7 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
                 "\"address\":"+"\""+address+"\""+"," +
                 "\"onboarded\":"+onboarded+"," +
                 "\"status\":"+status.ordinal()+"," +
-                "\"workflowId\":"+viewId+" " +
+                "\"viewId\":"+viewId+" " +
                 "}";
         Customer customer = gson.fromJson(requestObject,Customer.class);
         logger.info("Request object created:"+ requestObject);
