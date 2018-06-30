@@ -46,7 +46,7 @@ public class CustomerController {
             throw new ViewNotFoundException("Specified view does not exist");
 
         if(workflowService.getWorkflowById(payload.getWorkflowId()) == null)
-            throw new WorkflowNotFoundException("Specified view does not exist");
+            throw new WorkflowNotFoundException("Specified workflow does not exist");
 
         if(payload.getStatus() == null)
             payload.setStatus(CustomerStatus.INACTIVE);
@@ -85,7 +85,7 @@ public class CustomerController {
             throw new ViewNotFoundException("Specified view does not exist");
 
         if(workflowService.getWorkflowById(payload.getWorkflowId()) == null)
-            throw new WorkflowNotFoundException("Specified view does not exist");
+            throw new WorkflowNotFoundException("Specified workflow does not exist");
 
         if(payload.getStatus() == null)
             payload.setStatus(CustomerStatus.INACTIVE);
