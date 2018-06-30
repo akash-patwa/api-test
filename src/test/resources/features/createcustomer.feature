@@ -79,7 +79,7 @@ Feature: Create customer API Test
   @negative
   Scenario: Check validation on customer creation with invalid view
     Given The app database has dummy customer data
-    And Client has customer data User 11,Jaypur,true,INACTIVE,-7,4 with invalid view
+    And Client has customer data User 11,Jaypur,true,INACTIVE,-7,4
     When The client send POST using API /customers
     Then The client should receive 404 as HTTP status code
     And Client should get error message Specified view does not exist
@@ -88,7 +88,7 @@ Feature: Create customer API Test
   @negative
   Scenario: Check validation on customer creation with invalid workflow
     Given The app database has dummy customer data
-    And Client has customer data User 12,Goa,true,ACTIVE,3,-9 with invalid workflow
+    And Client has customer data User 12,Goa,true,ACTIVE,3,-9
     When The client send POST using API /customers
     Then The client should receive 404 as HTTP status code
     And Client should get error message Specified workflow does not exist
@@ -96,7 +96,7 @@ Feature: Create customer API Test
 
     @negative
     Scenario: Check validation on customer creation with invalid request format containing id
-      Given The Client has customer data 1, User 13,Ahmedabad,true,ACTIVE,2,1
+      Given A client has customer data 1, User 13,Ahmedabad,true,ACTIVE,2,1
       When The client send POST using API /customers
       Then The client should receive 400 as HTTP status code
       And Client should get error message The request could not be understood by the server due to malformed syntax
@@ -119,7 +119,7 @@ Feature: Create customer API Test
 
   @negative
   Scenario: Check validation on customer creation with invalid status
-    Given Client has customer data User 14,Gurgaon,true,ACTIVE1,2,1 with invalid status
+    Given A client has customer data User 14,Gangtok,true,ACTIVE1,2,1 having invalid status
     When The client send POST using API /customers
     Then The client should receive 400 as HTTP status code
     And Client should get error message The request could not be understood by the server due to malformed syntax
@@ -127,7 +127,7 @@ Feature: Create customer API Test
 
   @negative
   Scenario: Check validation on customer creation with invalid onboard status
-    Given Client has customer data User 15,Gurgaon,abc,ACTIVE,2,1 with invalid onboard status
+    Given A client has customer data User 15,Dargeeling,abc,ACTIVE,2,1 having invalid onboard status
     When The client send POST using API /customers
     Then The client should receive 400 as HTTP status code
     And Client should get error message The request could not be understood by the server due to malformed syntax

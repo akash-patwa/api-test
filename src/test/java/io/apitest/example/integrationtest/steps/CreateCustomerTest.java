@@ -116,7 +116,7 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
     }
 
     @And("^The client has customer data (.+),(.+),(.+),(.+),(.+) but no view id$")
-    public void createRequestObjectNoView(String name, String address, boolean onboarded, CustomerStatus status, long workflowId) {
+    public void createRequestWithNoView(String name, String address, boolean onboarded, CustomerStatus status, long workflowId) {
         requestObject = "{" +
                 "\"name\":"+"\""+name+"\""+"," +
                 "\"address\":"+"\""+address+"\""+"," +
@@ -130,7 +130,7 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
     }
 
     @And("^The client has customer data (.+),(.+),(.+),(.+),(.+) but no workflow id$")
-    public void createRequestObjectNoWorkflow(String name, String address, boolean onboarded, CustomerStatus status, long viewId) {
+    public void createRequestWithNoWorkflow(String name, String address, boolean onboarded, CustomerStatus status, long viewId) {
         requestObject = "{" +
                 "\"name\":"+"\""+name+"\""+"," +
                 "\"address\":"+"\""+address+"\""+"," +
@@ -186,23 +186,8 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
         Assert.assertTrue("Invalid request parameter",customer != null);
     }
 
-    @And("^Client has customer data (.+),(.+),(.+),(.+),(.+),(.+) with invalid view$")
+    @And("^Client has customer data (.+),(.+),(.+),(.+),(.+),(.+)$")
     public void createRequestWithInvalidView(String name, String address, boolean onboarded, CustomerStatus status, long viewId, long workflowId) {
-        requestObject = "{" +
-                "\"name\":"+"\""+name+"\""+"," +
-                "\"address\":"+"\""+address+"\""+"," +
-                "\"onboarded\":"+onboarded+"," +
-                "\"status\":"+"\""+status+"\""+"," +
-                "\"viewId\":"+viewId+"," +
-                "\"workflowId\":"+workflowId+" " +
-                "}";
-        Customer customer = gson.fromJson(requestObject,Customer.class);
-        logger.info("Request object created:"+ requestObject);
-        Assert.assertTrue("Invalid request parameter",customer != null);
-    }
-
-    @And("^Client has customer data (.+),(.+),(.+),(.+),(.+),(.+) with invalid workflow$")
-    public void createRequestWithInvalidWorkflow(String name, String address, boolean onboarded, CustomerStatus status, long viewId, long workflowId) {
         requestObject = "{" +
                 "\"name\":"+"\""+name+"\""+"," +
                 "\"address\":"+"\""+address+"\""+"," +
@@ -222,7 +207,7 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
                 .andDo(print());
     }
 
-    @Given("^The Client has customer data (.+),(.+),(.+),(.+),(.+),(.+),(.+)$")
+    @Given("^A client has customer data (.+),(.+),(.+),(.+),(.+),(.+),(.+)$")
     public void createRequestWithId(long id, String name, String address, boolean onboarded, CustomerStatus status, long viewId, long workflowId) {
         requestObject = "{" +
                 "\"id\":"+id+"," +
@@ -238,7 +223,7 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
         Assert.assertTrue("Invalid request parameter",customer != null);
     }
 
-    @Given("^Client has customer data (.+),(.+),(.+),(.+),(.+),(.+) with invalid status$")
+    @Given("^A client has customer data (.+),(.+),(.+),(.+),(.+),(.+) having invalid status$")
     public void createRequestWithInvalidStatusFormat(String name, String address, boolean onboarded, String status, long viewId, long workflowId) {
         requestObject = "{" +
                 "\"name\":"+"\""+name+"\""+"," +
@@ -253,8 +238,8 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
         Assert.assertTrue("Invalid request parameter",customer != null);
     }
 
-    @Given("^Client has customer data (.+),(.+),(.+),(.+),(.+),(.+) with invalid onboard status$")
-    public void createRequestWithInvalidStatusFormat(String name, String address, String onboarded, CustomerStatus status, long viewId, long workflowId) {
+    @Given("^A client has customer data (.+),(.+),(.+),(.+),(.+),(.+) having invalid onboard status$")
+    public void createRequestWithInvalidOnboardStatusFormat(String name, String address, String onboarded, CustomerStatus status, long viewId, long workflowId) {
         requestObject = "{" +
                 "\"name\":"+"\""+name+"\""+"," +
                 "\"address\":"+"\""+address+"\""+"," +
