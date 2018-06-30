@@ -38,9 +38,11 @@ public class CustomerController {
     WorkflowService workflowService;
 
     @RequestMapping(value = "/customer", method = RequestMethod.POST)
-    public ResponseEntity<Customer> saveCustomer(@Valid @RequestBody Customer payload) throws CustomerNotFoundException,
-                                                            ViewNotFoundException, WorkflowNotFoundException {
+    public ResponseEntity<Customer> saveCustomer(@Valid @RequestBody Customer payload) throws Exception {
         logger.info("Payload to save " + payload);
+
+        if(payload.getId() > 0 || payload.getId() < 0)
+            throw new Exception();
 
         if(viewService.getViewById(payload.getViewId()) == null)
             throw new ViewNotFoundException("Specified view does not exist");
