@@ -1,15 +1,12 @@
 package io.apitest.example.integrationtest.steps;
 
-import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
-import io.apitest.example.enums.CustomerStatus;
 import io.apitest.example.integrationtest.CustomerAppBaseIntegrationTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -24,6 +21,7 @@ public class SearchCustomerTest extends CustomerAppBaseIntegrationTest{
 
     @When("^The client send GET request with API (.+)$")
     public void sendGETRequest(String URL) throws Exception {
+        logger.info("Execute GET request");
         resultActions = mockMvc.perform(MockMvcRequestBuilders.get(URL).accept(MediaType.APPLICATION_JSON));
     }
 
