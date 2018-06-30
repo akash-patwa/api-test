@@ -21,16 +21,12 @@ public class Customer {
     private long id;
 
     @NotNull
-    @Size(min = 4, message = "Name should have at least 2 characters")
     private String name;
 
     @NotNull
-    @Size(min = 4, max = 20, message = "Address should have 2 to 20 characters")
     private String address;
 
     private boolean isOnboarded;
-
-    @NotNull
     private CustomerStatus status;
 
     @NotNull
