@@ -23,11 +23,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Created by prasantabiswas on 29/06/18.
  */
-public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
+public class CreateCustomerIntegrationTest extends CustomerAppBaseIntegrationTest {
 
     private static int dbState = 0;
     private static String requestObject;
-    private static final Logger logger = LoggerFactory.getLogger(CreateCustomerTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(CreateCustomerIntegrationTest.class);
     private static final Gson gson = new Gson();
 
     @Before

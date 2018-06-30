@@ -15,9 +15,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Created by prasantabiswas on 29/06/18.
  */
-public class SearchCustomerTest extends CustomerAppBaseIntegrationTest{
+public class SearchCustomerIntegrationTest extends CustomerAppBaseIntegrationTest{
 
-    private static final Logger logger = LoggerFactory.getLogger(SearchCustomerTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(SearchCustomerIntegrationTest.class);
 
     @When("^The client send GET request with API (.+)$")
     public void sendGETRequest(String URL) throws Exception {
