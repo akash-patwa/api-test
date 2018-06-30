@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import java.util.Date;
 
 /**
@@ -59,7 +60,7 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+    public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers, HttpStatus status, WebRequest request) {
         ErrorResponse errorDetails = new ErrorResponse();
         errorDetails.setTimestamp(new Date());
@@ -71,13 +72,24 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    public ResponseEntity<Object> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex, WebRequest request) {
         ErrorResponse errorDetails = new ErrorResponse();
         errorDetails.setTimestamp(new Date());
-        errorDetails.setErrorCode(HttpStatus.BAD_REQUEST.value());
-        errorDetails.setMessage("The requested method not supported");
+        errorDetails.setErrorCode(HttpStatus.METHOD_NOT_ALLOWED.value());
+        errorDetails.setMessage("Method Not Supported");
         errorDetails.setDetails(request.getDescription(false));
         ex.printStackTrace();
-        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(errorDetails, HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<Object> handleNoHandleFoundException(NoHandlerFoundException ex, WebRequest request) {
+        ErrorResponse errorDetails = new ErrorResponse();
+        errorDetails.setTimestamp(new Date());
+        errorDetails.setErrorCode(HttpStatus.NOT_FOUND.value());
+        errorDetails.setMessage("Method Not Found");
+        errorDetails.setDetails(request.getDescription(false));
+        ex.printStackTrace();
+        return new ResponseEntity(errorDetails, HttpStatus.NOT_FOUND);
     }
 }
