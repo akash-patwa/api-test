@@ -43,7 +43,7 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
     }
 
     @And("^The client has customer data (.+),(.+),(.+),(.+),(.+),(.+)$")
-    public void createRequestObject(String name, String address, boolean onboarded, CustomerStatus status, long viewId, long workflowId) {
+    public void createRequestObject(String name, String address, boolean onboarded, String status, long viewId, long workflowId) {
         requestObject = "{" +
                     "\"name\":"+"\""+name+"\""+"," +
                     "\"address\":"+"\""+address+"\""+"," +
@@ -135,7 +135,7 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
                 "\"name\":"+"\""+name+"\""+"," +
                 "\"address\":"+"\""+address+"\""+"," +
                 "\"onboarded\":"+onboarded+"," +
-                "\"status\":"+status.ordinal()+"," +
+                "\"status\":"+"\""+status+"\""+"," +
                 "\"viewId\":"+viewId+" " +
                 "}";
         Customer customer = gson.fromJson(requestObject,Customer.class);
@@ -187,7 +187,7 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
     }
 
     @And("^Client has customer data (.+),(.+),(.+),(.+),(.+),(.+)$")
-    public void createRequestWithInvalidView(String name, String address, boolean onboarded, CustomerStatus status, long viewId, long workflowId) {
+    public void createRequestWithInvalidView(String name, String address, boolean onboarded, String status, long viewId, long workflowId) {
         requestObject = "{" +
                 "\"name\":"+"\""+name+"\""+"," +
                 "\"address\":"+"\""+address+"\""+"," +
@@ -211,21 +211,6 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
     public void createRequestWithId(long id, String name, String address, boolean onboarded, CustomerStatus status, long viewId, long workflowId) {
         requestObject = "{" +
                 "\"id\":"+id+"," +
-                "\"name\":"+"\""+name+"\""+"," +
-                "\"address\":"+"\""+address+"\""+"," +
-                "\"onboarded\":"+onboarded+"," +
-                "\"status\":"+"\""+status+"\""+"," +
-                "\"viewId\":"+viewId+"," +
-                "\"workflowId\":"+workflowId+" " +
-                "}";
-        Customer customer = gson.fromJson(requestObject,Customer.class);
-        logger.info("Request object created:"+ requestObject);
-        Assert.assertTrue("Invalid request parameter",customer != null);
-    }
-
-    @Given("^A client has customer data (.+),(.+),(.+),(.+),(.+),(.+) having invalid status$")
-    public void createRequestWithInvalidStatusFormat(String name, String address, boolean onboarded, String status, long viewId, long workflowId) {
-        requestObject = "{" +
                 "\"name\":"+"\""+name+"\""+"," +
                 "\"address\":"+"\""+address+"\""+"," +
                 "\"onboarded\":"+onboarded+"," +

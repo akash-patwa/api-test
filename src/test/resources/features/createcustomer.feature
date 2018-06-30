@@ -119,7 +119,7 @@ Feature: Create customer API Test
 
   @negative
   Scenario: Check validation on customer creation with invalid status
-    Given A client has customer data User 14,Gangtok,true,ACTIVE1,2,1 having invalid status
+    Given The client has customer data User 14,Gangtok,true,ACTIVE1,2,1
     When The client send POST using API /customers
     Then The client should receive 400 as HTTP status code
     And Client should get error message The request could not be understood by the server due to malformed syntax
