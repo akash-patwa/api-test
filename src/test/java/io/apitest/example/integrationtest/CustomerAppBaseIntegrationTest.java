@@ -15,8 +15,8 @@ import org.springframework.web.context.WebApplicationContext;
 @WebAppConfiguration
 public class CustomerAppBaseIntegrationTest {
 
-    protected MockMvc mockMvc;
-    protected ResultActions resultActions;
+    protected static MockMvc mockMvc;
+    protected static ResultActions resultActions;
 
     @Autowired
     protected WebApplicationContext wac;
