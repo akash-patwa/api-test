@@ -175,10 +175,10 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
     @And("^The client has customer data (.+),(.+),(.+),(.+),(.+) without address$")
     public void createRequestWithoutAddress(String name, boolean onboarded, CustomerStatus status, long viewId, long workflowId) {
         requestObject = "{" +
-                "\"address\":"+"\""+name+"\""+"," +
+                "\"name\":"+"\""+name+"\""+"," +
                 "\"onboarded\":"+onboarded+"," +
                 "\"status\":"+"\""+status+"\""+"," +
-                "\"status\":"+viewId+"," +
+                "\"viewId\":"+viewId+"," +
                 "\"workflowId\":"+workflowId+" " +
                 "}";
         Customer customer = gson.fromJson(requestObject,Customer.class);
