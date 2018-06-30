@@ -1,3 +1,4 @@
+@create_customer
 Feature: Create customer API Test
 
   Customer record can be created using
