@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by prasantabiswas on 26/06/18.
@@ -14,9 +15,13 @@ import javax.persistence.Id;
 public class Field {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private long id;
+
+    @NotNull
     private String name;
+
+    @NotNull
     private FieldType fieldType;
 
     public Field(){

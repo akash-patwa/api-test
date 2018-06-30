@@ -1,10 +1,14 @@
 package io.apitest.example.model;
 
 import io.apitest.example.enums.CustomerStatus;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Created by prasantabiswas on 26/06/18.
@@ -15,11 +19,24 @@ public class Customer {
     @Id
     @GeneratedValue
     private long id;
+
+    @NotNull
+    @Size(min = 4, message = "Name should have at least 2 characters")
     private String name;
+
+    @NotNull
+    @Size(min = 4, max = 20, message = "Address should have 2 to 20 characters")
     private String address;
+
     private boolean isOnboarded;
+
+    @NotNull
     private CustomerStatus status;
+
+    @NotNull
     private long viewId;
+
+    @NotNull
     private long workflowId;
 
     public Customer() {

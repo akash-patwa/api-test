@@ -1,6 +1,9 @@
 package io.apitest.example.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -12,10 +15,18 @@ public class SubView {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @NotNull
     private String name;
+
+    @NotNull
     private String description;
+
+    @NotNull
+    @NotEmpty
     @ManyToMany(targetEntity=Field.class)
     private List<Field> fields;
+
     @ManyToMany
     private List<View> views;
 
