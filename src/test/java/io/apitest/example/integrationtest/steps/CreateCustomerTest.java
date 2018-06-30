@@ -9,10 +9,6 @@ import cucumber.api.java.en.When;
 import io.apitest.example.enums.CustomerStatus;
 import io.apitest.example.integrationtest.CustomerAppBaseIntegrationTest;
 import io.apitest.example.model.Customer;
-import jdk.nashorn.internal.objects.Global;
-import jdk.nashorn.internal.parser.JSONParser;
-import jdk.nashorn.internal.runtime.Context;
-import jdk.nashorn.internal.runtime.ScriptObject;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +17,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Created by prasantabiswas on 29/06/18.
@@ -51,12 +48,12 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
                     "\"name\":"+"\""+name+"\""+"," +
                     "\"address\":"+"\""+address+"\""+"," +
                     "\"onboarded\":"+onboarded+"," +
-                    "\"status\":"+status.ordinal()+"," +
+                    "\"status\":"+"\""+status+"\""+"," +
                     "\"viewId\":"+viewId+", " +
                     "\"workflowId\":"+workflowId+" " +
                 "}";
         Customer customer = gson.fromJson(requestObject,Customer.class);
-        logger.info("Request object created:\n"+ requestObject);
+        logger.info("Request object created:"+ requestObject);
         Assert.assertTrue("Invalid request parameter",customer != null);
     }
 
@@ -72,6 +69,12 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
 
     @Then("^It should receive (.+) as HTTP status code$")
     public void verifyHTTPStatusCode(int status) throws Exception {
+        resultActions.andExpect(status().is(status));
+    }
+
+    @And("^customer database should be updated$")
+    public void verifyCustomerUpdatedDatabase() throws Exception {
+        logger.info("Check customer database update");
         resultActions.andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.name").exists())
                 .andExpect(jsonPath("$.address").exists())
@@ -79,28 +82,79 @@ public class CreateCustomerTest extends CustomerAppBaseIntegrationTest {
                 .andExpect(jsonPath("$.status").exists())
                 .andExpect(jsonPath("$.viewId").exists())
                 .andExpect(jsonPath("$.workflowId").exists())
-                .andExpect(status().is(status))
                 .andDo(print());
-    }
-
-    @And("^customer database should be updated$")
-    public void verifyCustomerDatabase() {
-        logger.info("Check customer database update");
         int newDbState = customerService.getAllCustomer().size();
         Assert.assertTrue("Creation customer verification failed", newDbState > dbState);
     }
 
-    @And("^The client has customer data (.+),(.+),(.+),(.+),(.+)$")
+    @And("^The client has customer data (.+),(.+),(.+),(.+),(.+) but no onboard status$")
     public void createRequestObject(String name, String address, CustomerStatus status, long viewId, long workflowId) {
         requestObject = "{" +
                 "\"name\":"+"\""+name+"\""+"," +
                 "\"address\":"+"\""+address+"\""+"," +
-                "\"status\":"+status.ordinal()+"," +
+                "\"status\":"+"\""+status+"\""+"," +
                 "\"viewId\":"+viewId+", " +
                 "\"workflowId\":"+workflowId+" " +
                 "}";
         Customer customer = gson.fromJson(requestObject,Customer.class);
-        logger.info("Request object created:\n"+ requestObject);
+        logger.info("Request object created:"+ requestObject);
         Assert.assertTrue("Invalid request parameter",customer != null);
+    }
+
+    @And("^The client has customer data (.+),(.+),(.+),(.+),(.+) but no status$")
+    public void createRequestObject(String name, String address, boolean onboarded, long viewId, long workflowId) {
+        requestObject = "{" +
+                "\"name\":"+"\""+name+"\""+"," +
+                "\"address\":"+"\""+address+"\""+"," +
+                "\"onboarded\":"+onboarded+"," +
+                "\"viewId\":"+viewId+", " +
+                "\"workflowId\":"+workflowId+" " +
+                "}";
+        Customer customer = gson.fromJson(requestObject,Customer.class);
+        logger.info("Request object created:"+ requestObject);
+        Assert.assertTrue("Invalid request parameter",customer != null);
+    }
+
+    @And("^The client has customer data (.+),(.+),(.+),(.+),(.+) but no view Id$")
+    public void createRequestObjectNoView(String name, String address, boolean onboarded, CustomerStatus status, long workflowId) {
+        requestObject = "{" +
+                "\"name\":"+"\""+name+"\""+"," +
+                "\"address\":"+"\""+address+"\""+"," +
+                "\"onboarded\":"+onboarded+"," +
+                "\"status\":"+status.ordinal()+"," +
+                "\"workflowId\":"+workflowId+" " +
+                "}";
+        Customer customer = gson.fromJson(requestObject,Customer.class);
+        logger.info("Request object created:"+ requestObject);
+        Assert.assertTrue("Invalid request parameter",customer != null);
+    }
+
+    @And("^The client has customer data (.+),(.+),(.+),(.+),(.+) but no workflow Id")
+    public void createRequestObjectNoWorkflow(String name, String address, boolean onboarded, CustomerStatus status, long viewId) {
+        requestObject = "{" +
+                "\"name\":"+"\""+name+"\""+"," +
+                "\"address\":"+"\""+address+"\""+"," +
+                "\"onboarded\":"+onboarded+"," +
+                "\"status\":"+status.ordinal()+"," +
+                "\"workflowId\":"+viewId+" " +
+                "}";
+        Customer customer = gson.fromJson(requestObject,Customer.class);
+        logger.info("Request object created:"+ requestObject);
+        Assert.assertTrue("Invalid request parameter",customer != null);
+    }
+
+    @And("^customer database should not be updated$")
+    public void verifyCustomerDatabase() throws Exception {
+        logger.info("Check customer database update");
+        resultActions.andExpect(jsonPath("$.id").doesNotExist())
+                .andExpect(jsonPath("$.name").doesNotExist())
+                .andExpect(jsonPath("$.address").doesNotExist())
+                .andExpect(jsonPath("$.onboarded").doesNotExist())
+                .andExpect(jsonPath("$.status").doesNotExist())
+                .andExpect(jsonPath("$.viewId").doesNotExist())
+                .andExpect(jsonPath("$.workflowId").doesNotExist())
+                .andDo(print());
+        int newDbState = customerService.getAllCustomer().size();
+        Assert.assertTrue("Creation customer verification failed", newDbState == dbState);
     }
 }
