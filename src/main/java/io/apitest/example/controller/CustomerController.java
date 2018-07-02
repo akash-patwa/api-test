@@ -73,11 +73,11 @@ public class CustomerController {
             throw new CustomerNotFoundException("Customer to delete doesn't exist");
         }
         customerService.removeCustomer(customer);
-        return new ResponseEntity<Response>(new Response(HttpStatus.OK.value(), "Customer has been deleted"), HttpStatus.OK);
+        return new ResponseEntity<Response>(new Response(HttpStatus.OK.value(), "Customer has been deleted"), HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.PATCH)
-    public ResponseEntity<Customer>  updateCustomer(@Valid @RequestBody Customer payload) throws CustomerNotFoundException {
+    public ResponseEntity<Response>  updateCustomer(@Valid @RequestBody Customer payload) throws CustomerNotFoundException {
         logger.info("Payload to update " + payload);
         Customer customer = customerService.getCustomerById(payload.getId());
         if (customer == null || customer.getId() <= 0){
@@ -91,8 +91,8 @@ public class CustomerController {
 
         if(payload.getStatus() == null)
             payload.setStatus(CustomerStatus.INACTIVE);
-
-        return new ResponseEntity<Customer>(customerService.saveCustomer(payload), HttpStatus.OK);
+        customerService.saveCustomer(payload);
+        return new ResponseEntity<Response>(new Response(HttpStatus.OK.value(),"Customer has been updated"), HttpStatus.OK);
     }
 
     @RequestMapping(value="/customers", method=RequestMethod.GET)
