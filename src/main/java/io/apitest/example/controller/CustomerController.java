@@ -52,7 +52,7 @@ public class CustomerController {
 
         if(payload.getStatus() == null)
             payload.setStatus(CustomerStatus.INACTIVE);
-        return new ResponseEntity<Customer>(customerService.saveCustomer(payload), HttpStatus.OK);
+        return new ResponseEntity<Customer>(customerService.saveCustomer(payload), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/customers/{id}", method = RequestMethod.GET)

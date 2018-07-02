@@ -15,7 +15,7 @@ Feature: Create customer API Test
     Given The app database has dummy customer data
     And The client has customer data User 5,Kolkata,false,INACTIVE,1,1
     When The client send POST using API /customers
-    Then The client should receive 200 as HTTP status code
+    Then The client should receive 201 as HTTP status code
     And Customer database should be updated
 
   @positive
@@ -23,7 +23,7 @@ Feature: Create customer API Test
     Given The app database has dummy customer data
     And The client has customer data User 6,Bangalore,ACTIVE,2,1 but no onboard status
     When The client send POST using API /customers
-    Then The client should receive 200 as HTTP status code
+    Then The client should receive 201 as HTTP status code
     And Customer database should be updated
 
   @positive
@@ -31,7 +31,7 @@ Feature: Create customer API Test
     Given The app database has dummy customer data
     And The client has customer data User 7,Mumbai,true,3,2 but no status
     When The client send POST using API /customers
-    Then The client should receive 200 as HTTP status code
+    Then The client should receive 201 as HTTP status code
     And Customer database should be updated
 
   @positive
@@ -39,7 +39,7 @@ Feature: Create customer API Test
     Given The app database has dummy customer data
     And The client has customer data `~!@#$%^&*()_-+=|\\}]{[\"':;?/>.<,,`~!@#$%^&*()_-+=|\\}]{[\"':;?/>.<,,true,ACTIVE,2,2
     When The client send POST using API /customers
-    Then The client should receive 200 as HTTP status code
+    Then The client should receive 201 as HTTP status code
     And Customer database should be updated
 
   @negative
